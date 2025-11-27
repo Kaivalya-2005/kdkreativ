@@ -17,11 +17,22 @@ const Header = () => {
     >
       <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-3">
-          <img 
-            src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764235611/KD_Kreativ_logo_1_0_vltlwo.png" 
-            alt="KD Kreativ Logo" 
-            className="h-12 w-12 object-contain"
-          />
+          <div className="relative flex-shrink-0" style={{ width: '64px', height: '64px' }}>
+              <motion.img
+                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764246725/logo_circle1_au6wyw.png"
+                alt="KD Kreativ Logo"
+                style={{ width: '64px', height: '64px', objectFit: 'contain' }}
+                className="absolute inset-0"
+                animate={{ rotate: [360, 0] }}
+                transition={{ duration: 5, ease: 'linear',repeat: Infinity }}
+              />
+              <motion.img
+                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764248620/name_kd_wftrsu.png"
+                alt="KD Kreativ Text"
+                style={{ width: '64px', height: '64px', objectFit: 'contain', position: 'absolute', top: 0, left: '2px' }}
+                initial={{ opacity: 1 }}
+              />
+            </div>
           <span className={`text-2xl font-bold ${theme.accent}`}>KD Kreativ</span>
         </Link>
 
@@ -40,21 +51,21 @@ const Header = () => {
               isActive('/drawings') ? theme.accent : ''
             }`}
           >
-            Drawings
+            Gallery
           </Link>
-          <Link
+          {/* <Link
             to="/about"
             className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${
               isActive('/about') ? theme.accent : ''
             }`}
           >
             About
-          </Link>
+          </Link> */}
 
           {/* Theme Switcher */}
           <div className="relative group">
             <button className={`px-4 py-2 rounded-lg ${theme.card} ${theme.hover} ${theme.text} transition-colors border ${theme.border}`}>
-              🎨 Theme
+              Theme
             </button>
             <div className={`absolute right-0 mt-2 w-40 ${theme.card} rounded-lg shadow-xl border ${theme.border} opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300`}>
               {Object.keys(themes).map((themeName) => (
