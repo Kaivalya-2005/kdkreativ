@@ -29,37 +29,58 @@ const Landing = () => {
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[radial-gradient(circle_at_center,_#ffffff_0%,_#e23a88_50%,_#1e90c6_100%)]"
         >
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: 'easeOut' }}
-            className="text-center"
+            className="flex items-center justify-center gap-6"
           >
-            <motion.img
-              src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764235611/KD_Kreativ_logo_1_0_vltlwo.png"
-              alt="KD Kreativ"
-              className="w-32 h-32 mx-auto mb-6"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 2, ease: 'easeInOut' }}
-            />
-            <motion.h1
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="text-6xl font-bold text-white mb-4"
-            >
-              KD Kreativ
-            </motion.h1>
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
-              className="text-2xl text-purple-300"
-            >
-              Where Art Meets Imagination
-            </motion.p>
+            <div className="relative flex-shrink-0" style={{ width: '128px', height: '128px' }}>
+              <motion.img
+                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764246725/logo_circle1_au6wyw.png"
+                alt="KD Kreativ Logo"
+                style={{ width: '128px', height: '128px', objectFit: 'contain' }}
+                className="absolute inset-0"
+                animate={{ rotate: [360, 0] }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
+              />
+              <motion.img
+                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764248620/name_kd_wftrsu.png"
+                alt="KD Kreativ Text"
+                style={{ width: '128px', height: '128px', objectFit: 'contain', position: 'absolute', top: 0, left: '4px' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 1 }}
+              />
+            </div>
+            <div className="text-left">
+              <motion.h1
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="text-6xl font-bold text-white mb-4"
+                style={{
+                  fontFamily: "'Permanent Marker', cursive",
+                  WebkitTextStroke: '2px black'
+                }}
+              >
+                KD's Kreativ
+              </motion.h1>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="text-2xl text-yellow-100"
+                style={{
+                  fontFamily: "'Permanent Marker', cursive",
+                  WebkitTextStroke: '2px black'
+                }}
+              >
+                Where Art Meets Imagination
+              </motion.p>
+            </div>
           </motion.div>
         </motion.div>
       )}
