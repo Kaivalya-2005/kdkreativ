@@ -20,7 +20,7 @@ const ArtworkCard = ({ artwork, onClick, index = 0 }) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
             <h3 className="text-white font-semibold text-lg mb-1">{artwork.title}</h3>
             <p className="text-gray-300 text-sm">{artwork.description}</p>
