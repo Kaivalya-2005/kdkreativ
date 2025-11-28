@@ -33,8 +33,8 @@ const Header = () => {
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 ${theme.card} backdrop-blur-lg bg-opacity-60 border-b ${theme.border}`}
     >
-      <nav className="container mx-auto px-6 py-4 flex items-center justify-between ">
-        <Link to="/" className="flex items-center space-x-3 gap-3">
+      <nav className="container mx-auto px-9 py-3 flex items-center justify-between ">
+        <Link to="/" className="flex items-center space-x-3 gap-4 ">
           <div className="relative shrink-0 " style={{ width: '64px', height: '64px' }}>
             <motion.img
               src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764246725/logo_circle1_au6wyw.png"
@@ -51,10 +51,10 @@ const Header = () => {
               initial={{ opacity: 1 }}
             />
           </div>
-          <span className={`text-2xl font-bold ${theme.accent}`}>KD Kreativ</span>
+          <span className={`text-5xl font-bold ${theme.accent}`}>KD's Kreativ</span>
         </Link>
 
-        <div className="flex items-center space-x-8 gap-3.5">
+        <div className="text-3xl flex items-center space-x-8 gap-5">
           <button
             onClick={() => {
               if (location.pathname === '/') {
@@ -98,7 +98,7 @@ const Header = () => {
 
           {/* Theme Switcher */}
           <div className="relative group">
-            <button className={`px-4 py-2 rounded-lg ${theme.card} ${theme.hover} ${theme.text} transition-colors border ${theme.border}`}>
+            <button className={`px-3 py-2 rounded-lg ${theme.card} ${theme.hover} ${theme.text} transition-colors border ${theme.border}`}>
               Theme
             </button>
             <div className={`absolute right-0 mt-2 w-40 ${theme.card} rounded-lg shadow-xl border ${theme.border} opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300`}>
@@ -106,7 +106,7 @@ const Header = () => {
                 <button
                   key={themeName}
                   onClick={() => changeTheme(themeName)}
-                  className={`w-full text-left px-4 py-2 ${theme.text} ${theme.hover} first:rounded-t-lg last:rounded-b-lg transition-colors ${currentTheme === themeName ? theme.accent : ''
+                  className={`w-full text-center px-4 py-2 ${theme.text} ${theme.hover} first:rounded-t-lg last:rounded-b-lg transition-colors ${currentTheme === themeName ? theme.accent : ''
                     }`}
                 >
                   {themes[themeName].name}

@@ -13,10 +13,10 @@ const Footer = () => {
           
           <div className="flex space-x-6">
             <a 
-              href="https://instagram.com" 
+              href="https://instagram.com/kaivalya738" 
               target="_blank" 
               rel="noopener noreferrer"
-              className={`${theme.text} hover:${theme.accent} transition-colors`}
+              className={`px-3 ${theme.text} hover:${theme.accent} transition-colors`}
             >
               Instagram
             </a>
@@ -24,13 +24,13 @@ const Footer = () => {
               href="https://twitter.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className={`${theme.text} hover:${theme.accent} transition-colors`}
+              className={`px-3 ${theme.text} hover:${theme.accent} transition-colors`}
             >
               Twitter
             </a>
             <a 
               href="mailto:contact@kdkreativ.com"
-              className={`${theme.text} hover:${theme.accent} transition-colors`}
+              className={`px-3 ${theme.text} hover:${theme.accent} transition-colors`}
             >
               Contact
             </a>

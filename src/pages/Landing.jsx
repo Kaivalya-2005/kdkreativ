@@ -98,10 +98,10 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-24 pb-10 flex-col items-center justify-center">
+      <div className="pt-22 pb-10 flex-col items-center justify-center">
 
         {/* Top 21 Artworks Grid - Interactive Hover Reveal */}
-        <section className="relative w-full h-171 mb-32 overflow-hidden">
+        <section className="relative w-full h-173 mb-32 overflow-hidden">
           {/* Black overlay with 20% opacity */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
@@ -171,7 +171,7 @@ const Landing = () => {
         </section>
 
         {/* Best Artwork Section - 4 Rotating Images with 12 Artworks */}
-        <section className="container mx-auto px-10 py-20 mb-32 scroll-mt-20">
+        <section className="container mx-auto px-10 py-10 mb-32 scroll-mt-20">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -237,7 +237,7 @@ const Landing = () => {
         </section>
 
         {/* About Artist Preview */}
-        <section id="about-section" className="container mx-auto px-8 scroll-mt-24 flex items-center justify-center">
+        <section id="about-section" className="container mx-auto px-8 py-5 scroll-mt-24 flex items-center justify-center">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <motion.div
@@ -247,7 +247,7 @@ const Landing = () => {
               transition={{ duration: 0.8 }}
               className="text-center mb-20"
             >
-              <h1 className={`text-4xl md:text-6xl font-black mb-8 ${theme.accent} tracking-tight leading-tight`}>
+              <h1 className={`text-4xl md:text-6xl py-5 font-black mb-8 ${theme.accent} tracking-tight leading-tight`}>
                 About the Artist
               </h1>
             </motion.div>
@@ -260,7 +260,7 @@ const Landing = () => {
               transition={{ delay: 0.2, duration: 0.8 }}
               className={`${theme.card} rounded-3xl overflow-hidden shadow-2xl border-2 ${theme.border} backdrop-blur-md mb-20`}
             >
-              <div className="grid md:grid-cols-2 gap-16 p-12 md:p-20">
+              <div className="grid md:grid-cols-2 gap-16 md:p-10">
                 {/* Image Section */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -278,7 +278,7 @@ const Landing = () => {
                         style={{ borderRadius: '50%' }}
                       />
                     </div>
-                    <div className='mt-7'>
+                    <div className='py-5 flex items-center justify-center'>
                       <h2 className={`text-4xl md:text-4xl font-black mb-10 ${theme.accent} tracking-tight leading-tight`}>
                         Kaivalya Deshpande
                       </h2>
@@ -321,14 +321,14 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20"
+              className="grid grid-cols-1 md:grid-cols-3 gap-10 py-7"
             >
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
                 <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>50+</div>
                 <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Artworks Created</div>
               </div>
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>5+</div>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>10+</div>
                 <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Years of Experience</div>
               </div>
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
@@ -343,7 +343,7 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className={`${theme.card} rounded-3xl p-16 md:p-20 mb-20 border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
+              className={`${theme.card} rounded-3xl md:p-15 mb-20 border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
             >
               <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.accent} text-center tracking-tight`}>
                 Artistic Philosophy
@@ -362,12 +362,12 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center pb-20"
+              className="text-center py-13"
             >
               <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.text} tracking-tight`}>
                 Get in Touch
               </h3>
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-wrap justify-center gap-8 py-7">
                 <a
                   href="mailto:contact@kdkreativ.com"
                   className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
@@ -375,7 +375,7 @@ const Landing = () => {
                   Email Me
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/kaivalya738"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
