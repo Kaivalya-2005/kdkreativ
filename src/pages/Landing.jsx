@@ -29,7 +29,7 @@ const Landing = () => {
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[radial-gradient(circle_at_center,_#79b791_0%,_#0b6e4f_50%,_#073b3a_100%)]"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[radial-gradient(circle_at_center,#79b791_0%,#0b6e4f_50%,#073b3a_100%)]"
         >
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
@@ -37,7 +37,7 @@ const Landing = () => {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="flex items-center justify-center gap-6"
           >
-            <div className="relative flex-shrink-0" style={{ width: '128px', height: '128px' }}>
+            <div className="relative shrink-0" style={{ width: '128px', height: '128px' }}>
               <motion.img
                 src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764246725/logo_circle1_au6wyw.png"
                 alt="KD Kreativ Logo"
