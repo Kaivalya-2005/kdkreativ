@@ -90,17 +90,17 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-32 pb-16">
+      <div className="pt-24 pb-10">
 
         {/* Top 21 Artworks Grid - Interactive Hover Reveal */}
-        <section className="relative w-full h-screen mb-28 overflow-hidden">
+        <section className="relative w-full h-screen mb-32 overflow-hidden">
           {/* Black overlay with 20% opacity */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
-          
+
           {/* Centered Text */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-            <h2 
-              className="text-3xl md:text-6xl font-black text-white tracking-tight"
+            <h2
+              className="text-5xl md:text-8xl font-black text-white tracking-tight text-center"
               style={{
                 fontFamily: "'Permanent Marker', cursive",
                 WebkitTextStroke: '3px black',
@@ -117,13 +117,13 @@ const Landing = () => {
               // Generate random positions and sizes for each artwork
               const sizes = ['w-32 h-32', 'w-40 h-40', 'w-36 h-36', 'w-44 h-44', 'w-48 h-48', 'w-28 h-28', 'w-52 h-52'];
               const size = sizes[index % sizes.length];
-              
+
               // Calculate grid-like positions but with some randomness
               const row = Math.floor(index / 7);
               const col = index % 7;
               const topPercent = (row * 25) + (Math.random() * 10 - 5);
               const leftPercent = (col * 14) + (Math.random() * 8 - 4);
-              
+
               return (
                 <motion.div
                   key={artwork.id}
@@ -163,16 +163,16 @@ const Landing = () => {
         </section>
 
         {/* Best Artwork Section */}
-        <section className="container mx-auto px-8 mb-28">
+        <section className="container mx-auto px-8 mb-32 scroll-mt-20">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className={`text-4xl md:text-5xl font-extrabold mb-14 ${theme.text} tracking-tight`}
+            className={`text-5xl md:text-7xl font-extrabold mb-16 ${theme.text} tracking-tight text-center`}
           >
             Featured Artworks
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {featuredArtworks.map((artwork, index) => (
               <motion.div
                 key={artwork.id}
@@ -180,7 +180,7 @@ const Landing = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedArtwork(artwork)}
                 className={`${theme.card} rounded-3xl overflow-hidden cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 ${theme.border} backdrop-blur-md`}
               >
@@ -188,11 +188,11 @@ const Landing = () => {
                   <img
                     src={artwork.image_url}
                     alt={artwork.title}
-                    className="w-full h-full object-cover group-hover:scale-115 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-120 transition-transform duration-700"
                   />
                 </div>
                 <div className="p-8">
-                  <h3 className={`text-3xl font-extrabold mb-3 ${theme.accent} tracking-tight leading-tight`}>
+                  <h3 className={`text-3xl font-extrabold mb-4 ${theme.accent} tracking-tight leading-tight`}>
                     {artwork.title}
                   </h3>
                   <p className={`${theme.text} opacity-85 text-lg leading-relaxed`}>
@@ -205,29 +205,154 @@ const Landing = () => {
         </section>
 
         {/* About Artist Preview */}
-        <section className="container mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={`${theme.card} rounded-3xl p-16 text-center border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
-          >
-            <h2 className={`text-4xl md:text-5xl font-black mb-8 ${theme.accent} tracking-tight`}>
-              About the Artist
-            </h2>
-            <p className={`text-xl md:text-2xl ${theme.text} opacity-90 max-w-4xl mx-auto mb-10 font-light leading-relaxed`}>
-              Kaivalya Deshpande is a passionate artist exploring the boundaries of 
-              creativity through various mediums. Each piece tells a unique story, 
-              inviting viewers into a world of imagination and emotion.
-            </p>
-            <Link
-              to="/about"
-              className={`inline-flex items-center gap-3 px-10 py-5 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+        <section id="about-section" className="container mx-auto px-8 scroll-mt-24 flex items-center justify-center">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-20"
             >
-              Learn More
-              <span className="text-2xl">→</span>
-            </Link>
-          </motion.div>
+              <h1 className={`text-4xl md:text-6xl font-black mb-8 ${theme.accent} tracking-tight leading-tight`}>
+                About the Artist
+              </h1>
+            </motion.div>
+
+            {/* Main Content Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className={`${theme.card} rounded-3xl overflow-hidden shadow-2xl border-2 ${theme.border} backdrop-blur-md mb-20`}
+            >
+              <div className="grid md:grid-cols-2 gap-16 p-12 md:p-20">
+                {/* Image Section */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="flex items-center justify-center"
+                >
+                  <div className='flex-col items-center justify-center'>
+                    <div className="aspect-square w-80 h-80 overflow-hidden" style={{ borderRadius: '50%' }}>
+                      <img
+                        src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764228907/Kaivalya_formal_id2qh7.jpg"
+                        alt="Kaivalya Deshpande"
+                        className="w-full h-full object-cover"
+                        style={{ borderRadius: '50%' }}
+                      />
+                    </div>
+                    <div className='mt-7'>
+                      <h2 className={`text-4xl md:text-4xl font-black mb-10 ${theme.accent} tracking-tight leading-tight`}>
+                        Kaivalya Deshpande
+                      </h2>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Bio Section */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="flex flex-col justify-center"
+                >
+                  <div className={`${theme.text} space-y-6 text-lg md:text-xl opacity-90 leading-relaxed`}>
+                    <p>
+                      A passionate artist with a unique vision for transforming everyday moments
+                      into extraordinary visual narratives. Through a diverse range of mediums
+                      and styles, KD Kreativ brings stories to life on canvas.
+                    </p>
+                    <p>
+                      Each artwork is a reflection of deep observation, emotional connection,
+                      and technical mastery. From intricate portraits to abstract explorations,
+                      every piece invites viewers to discover new perspectives.
+                    </p>
+                    <p>
+                      With a commitment to continuous growth and artistic evolution,
+                      Kaivalya explores various techniques and subjects, always seeking
+                      to push creative boundaries and inspire others through art.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Stats Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20"
+            >
+              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>50+</div>
+                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Artworks Created</div>
+              </div>
+              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>5+</div>
+                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Years of Experience</div>
+              </div>
+              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>∞</div>
+                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Endless Creativity</div>
+              </div>
+            </motion.div>
+
+            {/* Philosophy Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className={`${theme.card} rounded-3xl p-16 md:p-20 mb-20 border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
+            >
+              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.accent} text-center tracking-tight`}>
+                Artistic Philosophy
+              </h3>
+              <p className={`${theme.text} text-xl md:text-2xl opacity-90 text-center max-w-5xl mx-auto font-light leading-relaxed italic`}>
+                "Art is not what you see, but what you make others see. Through every stroke,
+                every color, and every composition, I strive to create connections that transcend
+                the visual and touch the soul. My work is an ongoing dialogue between imagination
+                and reality, where each piece invites viewers to embark on their own journey of discovery."
+              </p>
+            </motion.div>
+
+            {/* Contact Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center pb-20"
+            >
+              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.text} tracking-tight`}>
+                Get in Touch
+              </h3>
+              <div className="flex flex-wrap justify-center gap-8">
+                <a
+                  href="mailto:contact@kdkreativ.com"
+                  className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+                >
+                  Email Me
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+                >
+                  Follow on Instagram
+                </a>
+              </div>
+            </motion.div>
+          </div>
         </section>
       </div>
 
