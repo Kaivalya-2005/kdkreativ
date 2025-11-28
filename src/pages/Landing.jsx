@@ -10,12 +10,20 @@ const Landing = () => {
   const { theme } = useTheme();
   const [showWelcome, setShowWelcome] = useState(true);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
+  const [rotatingIndices, setRotatingIndices] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 3000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingIndices((prev) => prev.map((idx) => (idx + 1) % 12));
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   const topArtworks = artworks.slice(0, 21);
@@ -90,10 +98,10 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-24 pb-10">
+      <div className="pt-24 pb-10 flex-col items-center justify-center">
 
         {/* Top 21 Artworks Grid - Interactive Hover Reveal */}
-        <section className="relative w-full h-screen mb-32 overflow-hidden">
+        <section className="relative w-full h-171 mb-32 overflow-hidden">
           {/* Black overlay with 20% opacity */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
@@ -162,45 +170,69 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* Best Artwork Section */}
-        <section className="container mx-auto px-8 mb-32 scroll-mt-20">
+        {/* Best Artwork Section - 4 Rotating Images with 12 Artworks */}
+        <section className="container mx-auto px-10 py-20 mb-32 scroll-mt-20">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className={`text-5xl md:text-7xl font-extrabold mb-16 ${theme.text} tracking-tight text-center`}
+            className={`text-4xl md:text-6xl py-5 font-extrabold mb-16 ${theme.text} tracking-tight text-center`}
           >
             Featured Artworks
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {featuredArtworks.map((artwork, index) => (
-              <motion.div
-                key={artwork.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setSelectedArtwork(artwork)}
-                className={`${theme.card} rounded-3xl overflow-hidden cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 ${theme.border} backdrop-blur-md`}
-              >
-                <div className="aspect-square overflow-hidden relative group">
-                  <img
-                    src={artwork.image_url}
-                    alt={artwork.title}
-                    className="w-full h-full object-cover group-hover:scale-120 transition-transform duration-700"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className={`text-3xl font-extrabold mb-4 ${theme.accent} tracking-tight leading-tight`}>
-                    {artwork.title}
-                  </h3>
-                  <p className={`${theme.text} opacity-85 text-lg leading-relaxed`}>
-                    {artwork.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-5">
+            {rotatingIndices.map((imageIndex, position) => {
+              const artwork = artworks[imageIndex];
+              return (
+                <motion.div
+                  key={position}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ 
+                    duration: 0.8,
+                    delay: position * 0.1,
+                    ease: "easeInOut"
+                  }}
+                  className={`${theme.card} rounded-3xl overflow-hidden cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 ${theme.border} backdrop-blur-md h-full`}
+                  onClick={() => setSelectedArtwork(artwork)}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="aspect-square overflow-hidden relative group">
+                    <motion.img
+                      src={artwork.image_url}
+                      alt={artwork.title}
+                      className="w-full h-full object-cover"
+                      layoutId={`artwork-${position}`}
+                      initial={{ scale: 1, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.95, opacity: 0 }}
+                      transition={{ 
+                        duration: 0.8,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <motion.div 
+                      className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"
+                      whileHover={{ backgroundColor: "rgba(0,0,0,0.3)" }}
+                    />
+                  </div>
+                  <motion.div 
+                    className="p-4 bg-linear-to-t from-black/40 to-transparent"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                  >
+                    <h3 className={`text-lg font-bold ${theme.accent} truncate`}>
+                      {artwork.title}
+                    </h3>
+                    <p className={`text-sm ${theme.text} opacity-75 line-clamp-1 mt-1`}>
+                      {artwork.description}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 
