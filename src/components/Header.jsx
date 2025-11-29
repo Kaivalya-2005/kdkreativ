@@ -71,8 +71,8 @@ const Header = () => {
             Home
           </button>
           <Link
-            to="/drawings"
-            className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${isActive('/drawings') ? theme.accent : ''
+            to="/Gallery"
+            className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${isActive('/Gallery') ? theme.accent : ''
               }`}
           >
             Gallery

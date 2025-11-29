@@ -111,16 +111,14 @@ const Landing = () => {
 
           {/* Centered Text */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-            <h2
-              className="text-5xl md:text-8xl font-black text-white tracking-tight text-center"
-              style={{
-                fontFamily: "'Permanent Marker', cursive",
-                WebkitTextStroke: '3px black',
-                textShadow: '6px 6px 0 rgba(0,0,0,0.4)',
-              }}
-            >
-              KD's Kreativ
-            </h2>
+            <motion.h2
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className={`text-4xl md:text-7xl py-5 font-extrabold mb-16 ${theme.accent} tracking-tight text-center`}
+          >
+            KD's KREATIV
+          </motion.h2>
           </div>
 
           {/* Artworks with varying sizes - reveals on cursor hover */}
@@ -165,7 +163,7 @@ const Landing = () => {
           {/* View All Button */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
             <Link
-              to="/drawings"
+              to="/Gallery"
               className={`inline-flex items-center gap-3 px-10 py-5 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
             >
               View All Drawings
@@ -180,7 +178,7 @@ const Landing = () => {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className={`text-4xl md:text-6xl py-5 font-extrabold mb-16 ${theme.text} tracking-tight text-center`}
+            className={`text-4xl md:text-6xl py-5 font-extrabold mb-16 ${theme.accent} tracking-tight text-center`}
           >
             Featured Artworks
           </motion.h2>
@@ -366,7 +364,7 @@ const Landing = () => {
               transition={{ duration: 0.8 }}
               className="text-center py-13"
             >
-              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.text} tracking-tight`}>
+              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.accent} tracking-tight`}>
                 Get in Touch
               </h3>
               <div className="flex flex-wrap justify-center gap-8 py-7">
