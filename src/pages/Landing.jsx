@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { artworks } from '../data/artworks';
@@ -20,8 +20,12 @@ const Landing = () => {
   }, []);
 
   useEffect(() => {
+    const featuredCount = artworks.filter(art => art.featured).length;
     const interval = setInterval(() => {
-      setRotatingIndices((prev) => prev.map((idx) => (idx + 1) % 12));
+      setRotatingIndices((prev) => prev.map((idx) => {
+        const nextIdx = (idx + 1) % featuredCount;
+        return nextIdx;
+      }));
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -182,36 +186,34 @@ const Landing = () => {
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-5">
             {rotatingIndices.map((imageIndex, position) => {
-              const artwork = artworks[imageIndex];
+              const featuredArtworks = artworks.filter(art => art.featured);
+              const artwork = featuredArtworks[imageIndex];
+              if (!artwork) return null;
               return (
-                <motion.div
+                <div
                   key={position}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ 
-                    duration: 0.8,
-                    delay: position * 0.1,
-                    ease: "easeInOut"
-                  }}
                   className={`${theme.card} rounded-3xl overflow-hidden cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 ${theme.border} backdrop-blur-md h-full`}
                   onClick={() => setSelectedArtwork(artwork)}
-                  whileHover={{ scale: 1.05 }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  style={{ transition: 'transform 0.3s ease-in-out' }}
                 >
                   <div className="aspect-square overflow-hidden relative group">
-                    <motion.img
-                      src={artwork.image_url}
-                      alt={artwork.title}
-                      className="w-full h-full object-cover"
-                      layoutId={`artwork-${position}`}
-                      initial={{ scale: 1, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.95, opacity: 0 }}
-                      transition={{ 
-                        duration: 0.8,
-                        ease: "easeInOut"
-                      }}
-                    />
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        src={artwork.image_url}
+                        alt={artwork.title}
+                        className="w-full h-full object-cover"
+                        key={`img-${imageIndex}`}
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -100, opacity: 0 }}
+                        transition={{ 
+                          duration: 1.2,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    </AnimatePresence>
                     <motion.div 
                       className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"
                       whileHover={{ backgroundColor: "rgba(0,0,0,0.3)" }}
@@ -230,7 +232,7 @@ const Landing = () => {
                       {artwork.description}
                     </p>
                   </motion.div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

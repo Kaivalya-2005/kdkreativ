@@ -5,39 +5,42 @@ const ThemeContext = createContext();
 export const themes = {
   dark: {
     name: 'Dark',
-    bg: 'bg-gray-900',
-    text: 'text-gray-100',
-    accent: 'text-purple-400',
-    card: 'bg-gray-800',
-    hover: 'hover:bg-gray-700',
-    border: 'border-gray-700'
+    bg: 'bg-[#1C1E22]',
+    text: 'text-[#9CA3AF]',
+    accent: 'text-[#E2E8F0]',
+    card: 'bg-[#25282E]/80',
+    hover: 'hover:bg-[#2D3139]/80',
+    border: 'border-[#333740]'
   },
+
   light: {
     name: 'Light',
-    bg: 'bg-gray-50',
-    text: 'text-gray-900',
-    accent: 'text-blue-600',
-    card: 'bg-white',
-    hover: 'hover:bg-gray-100',
-    border: 'border-gray-200'
+    bg: 'bg-[#F3F5F7]',
+    text: 'text-[#374151]',
+    accent: 'text-[#64748B]',
+    card: 'bg-[#FFFFFF]/80',
+    hover: 'hover:bg-[#F8FAFC]/80',
+    border: 'border-[#E2E8F0]'
   },
+
   ocean: {
     name: 'Ocean',
-    bg: 'bg-gradient-to-br from-blue-900 via-teal-800 to-cyan-900',
-    text: 'text-cyan-50',
-    accent: 'text-cyan-300',
-    card: 'bg-blue-900/50',
-    hover: 'hover:bg-blue-800/50',
-    border: 'border-cyan-700'
+    bg: 'bg-gradient-to-br from-[#1F2937] via-[#243342] to-[#2C3E50]',
+    text: 'text-[#CDD9E5]',
+    accent: 'text-[#94A3B8]',
+    card: 'bg-[#1F2937]/80',
+    hover: 'hover:bg-[#374151]/80',
+    border: 'border-[#475569]'
   },
+
   solar: {
     name: 'Solar',
-    bg: 'bg-gradient-to-br from-orange-900 via-amber-800 to-yellow-900',
-    text: 'text-amber-50',
-    accent: 'text-yellow-300',
-    card: 'bg-orange-900/50',
-    hover: 'hover:bg-orange-800/50',
-    border: 'border-amber-700'
+    bg: 'bg-gradient-to-br from-[#272121] via-[#382E2C] to-[#443632]',
+    text: 'text-[#D7CCC8]',
+    accent: 'text-[#A1887F]',
+    card: 'bg-[#2F2525]/80',
+    hover: 'hover:bg-[#3E3230]/80',
+    border: 'border-[#5D4037]'
   }
 };
 
