@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Landing from './pages/Landing';
 import Drawings from './pages/Drawings';
-import Admin from './pages/Admin';
 import './App.css';
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/Gallery" element={<Drawings />} />
-            <Route path="/admin" element={<Admin />} />
           </Routes>
           <Footer />
         </div>

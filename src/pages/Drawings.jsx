@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import { artworks } from '../data/artworks';
+import { useArtworks } from '../hooks/useArtworks';
 import Modal from '../components/Modal';
+import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 
 const Drawings = () => {
   const { theme } = useTheme();
+  const { artworks, loading } = useArtworks();
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -18,8 +20,16 @@ const Drawings = () => {
   const filteredArtworks = selectedCategory === 'All' 
     ? artworks 
     : selectedCategory === 'Featured'
-    ? artworks.filter(art => art.featured)
+    ? artworks.filter(art => art.featured === true)
     : artworks;
+
+  if (loading) {
+    return (
+      <div className={`min-h-screen ${theme.bg} flex items-center justify-center pt-24`}>
+        <div className={`text-2xl ${theme.text}`}>Loading artworks...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen ${theme.bg}`}>
@@ -75,9 +85,10 @@ const Drawings = () => {
               {/* Image Container */}
               <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} aspect-square`}>
                 <img
-                  src={artwork.image_url}
+                  src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                   alt={artwork.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
                 
                 {/* Overlay */}

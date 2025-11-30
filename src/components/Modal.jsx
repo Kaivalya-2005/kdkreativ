@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 
 const Modal = ({ artwork, onClose }) => {
   const { theme } = useTheme();
@@ -27,7 +28,7 @@ const Modal = ({ artwork, onClose }) => {
             {/* Image Section */}
             <div className="relative">
               <img
-                src={artwork.image_url}
+                src={getOptimizedImageUrl(artwork.image_url, 'large')}
                 alt={artwork.title}
                 className="w-full h-full object-cover rounded-lg"
               />

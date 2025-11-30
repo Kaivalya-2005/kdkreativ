@@ -2,36 +2,77 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { artworks } from '../data/artworks';
+import { useArtworks } from '../hooks/useArtworks';
 import ArtworkCard from '../components/ArtworkCard';
 import Modal from '../components/Modal';
+import { getOptimizedImageUrl } from '../utils/imageOptimizer';
+import circleLogo from '../assets/circle.png';
+import nameLogo from '../assets/name.png';
+import profileImage from '../assets/Kaivalya_formal.jpg';
 
 const Landing = () => {
   const { theme } = useTheme();
-  const [showWelcome, setShowWelcome] = useState(true);
+  const { artworks, loading } = useArtworks();
+  const skipWelcome = sessionStorage.getItem('skipWelcome') === 'true';
+  const [showWelcome, setShowWelcome] = useState(!skipWelcome);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [rotatingIndices, setRotatingIndices] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowWelcome(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    const scrollToTop = sessionStorage.getItem('scrollToTop') === 'true';
+    const scrollToAbout = sessionStorage.getItem('scrollToAbout') === 'true';
+
+    if (skipWelcome) {
+      sessionStorage.removeItem('skipWelcome');
+      
+      // Handle scrolling based on flags
+      setTimeout(() => {
+        if (scrollToTop) {
+          sessionStorage.removeItem('scrollToTop');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (scrollToAbout) {
+          sessionStorage.removeItem('scrollToAbout');
+          const aboutSection = document.getElementById('about-section');
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }, 100);
+    } else {
+      const timer = setTimeout(() => {
+        setShowWelcome(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [skipWelcome]);
 
   useEffect(() => {
-    const featuredCount = artworks.filter(art => art.featured).length;
-    const interval = setInterval(() => {
-      setRotatingIndices((prev) => prev.map((idx) => {
-        const nextIdx = (idx + 1) % featuredCount;
-        return nextIdx;
-      }));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+    if (artworks.length > 0) {
+      const featuredCount = artworks.filter(art => art.featured).length;
+      if (featuredCount > 0) {
+        const interval = setInterval(() => {
+          setRotatingIndices((prev) => prev.map((idx) => {
+            const nextIdx = (idx + 1) % featuredCount;
+            return nextIdx;
+          }));
+        }, 4000);
+        return () => clearInterval(interval);
+      }
+    }
+  }, [artworks]);
 
-  const topArtworks = artworks.slice(0, 21);
-  const featuredArtworks = artworks.filter(art => art.featured).slice(0, 5);
+  // Display artworks are those with display=true
+  const displayArtworks = artworks.filter(art => art.display === true).slice(0, 21);
+  // Featured artworks are those with featured=true
+  const featuredArtworks = artworks.filter(art => art.featured === true);
+
+  if (loading) {
+    return (
+      <div className={`min-h-screen ${theme.bg} flex items-center justify-center`}>
+        <div className={`text-2xl ${theme.text}`}>Loading artworks...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen ${theme.bg}`}>
@@ -51,7 +92,7 @@ const Landing = () => {
           >
             <div className="relative shrink-0" style={{ width: '128px', height: '128px' }}>
               <motion.img
-                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764246725/logo_circle1_au6wyw.png"
+                src={circleLogo}
                 alt="KD Kreativ Logo"
                 style={{ width: '128px', height: '128px', objectFit: 'contain' }}
                 className="absolute inset-0"
@@ -59,9 +100,9 @@ const Landing = () => {
                 transition={{ duration: 2, ease: 'easeInOut' }}
               />
               <motion.img
-                src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764248620/name_kd_wftrsu.png"
+                src={nameLogo}
                 alt="KD Kreativ Text"
-                style={{ width: '128px', height: '128px', objectFit: 'contain', position: 'absolute', top: 0, left: '4px' }}
+                style={{ width: '128px', height: '128px', objectFit: 'contain', position: 'absolute', top: 0, left: '2px' }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 1 }}
@@ -102,10 +143,10 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-22 pb-10 flex-col items-center justify-center">
+      <div className="pt-19 pb-10 flex-col items-center justify-center">
 
         {/* Top 21 Artworks Grid - Interactive Hover Reveal */}
-        <section className="relative w-full h-173 mb-32 overflow-hidden">
+        <section className="relative w-full h-176 mb-32 overflow-hidden">
           {/* Black overlay with 20% opacity */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
@@ -123,7 +164,7 @@ const Landing = () => {
 
           {/* Artworks with varying sizes - reveals on cursor hover */}
           <div className="absolute inset-0">
-            {topArtworks.map((artwork, index) => {
+            {displayArtworks.map((artwork, index) => {
               // Generate random positions and sizes for each artwork
               const sizes = ['w-32 h-32', 'w-40 h-40', 'w-36 h-36', 'w-44 h-44', 'w-48 h-48', 'w-28 h-28', 'w-52 h-52'];
               const size = sizes[index % sizes.length];
@@ -150,9 +191,10 @@ const Landing = () => {
                   {/* Hidden by default, reveals on hover */}
                   <div className="relative w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <img
-                      src={artwork.image_url}
+                      src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                       alt={artwork.title}
                       className="w-full h-full object-cover rounded-lg shadow-2xl"
+                      loading="lazy"
                     />
                   </div>
                 </motion.div>
@@ -199,7 +241,7 @@ const Landing = () => {
                   <div className="aspect-square overflow-hidden relative group">
                     <AnimatePresence mode="wait">
                       <motion.img
-                        src={artwork.image_url}
+                        src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                         alt={artwork.title}
                         className="w-full h-full object-cover"
                         key={`img-${imageIndex}`}
@@ -210,6 +252,7 @@ const Landing = () => {
                           duration: 1.2,
                           ease: "easeInOut"
                         }}
+                        loading="lazy"
                       />
                     </AnimatePresence>
                     <motion.div 
@@ -272,7 +315,7 @@ const Landing = () => {
                   <div className='flex-col items-center justify-center'>
                     <div className="aspect-square w-80 h-80 overflow-hidden" style={{ borderRadius: '50%' }}>
                       <img
-                        src="https://res.cloudinary.com/dajlsmy3x/image/upload/v1764228907/Kaivalya_formal_id2qh7.jpg"
+                        src={profileImage}
                         alt="Kaivalya Deshpande"
                         className="w-full h-full object-cover"
                         style={{ borderRadius: '50%' }}
