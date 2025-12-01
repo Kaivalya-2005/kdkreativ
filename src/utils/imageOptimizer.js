@@ -18,8 +18,8 @@ export const getOptimizedImageUrl = (url, size = 'medium') => {
 
   // Transformation presets for different use cases
   const transformations = {
-    // Small thumbnail for grid previews - 400x400px, fill to square
-    thumb: 'f_auto,q_auto:good,w_400,h_400,c_fill',
+    // Small thumbnail for grid previews - 600px wide for faster loading
+    thumb: 'f_auto,q_auto:good,w_600',
     
     // Medium size for modal/lightbox view - 1200px wide
     medium: 'f_auto,q_auto:good,w_1200',

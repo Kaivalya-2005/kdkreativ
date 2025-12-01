@@ -83,12 +83,12 @@ const Drawings = () => {
               className="group cursor-pointer"
             >
               {/* Image Container */}
-              <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} aspect-square`}>
+              <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} h-96`}>
                 <img
                   src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                   alt={artwork.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  loading="eager"
                 />
                 
                 {/* Overlay */}

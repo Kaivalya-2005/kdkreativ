@@ -22,20 +22,21 @@ const Modal = ({ artwork, onClose }) => {
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           onClick={(e) => e.stopPropagation()}
-          className={`${theme.card} rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl`}
+          className={`${theme.card} rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl`}
         >
           <div className="grid md:grid-cols-2 gap-6 p-6">
             {/* Image Section */}
-            <div className="relative">
+            <div className="relative flex items-center justify-center bg-black/5 rounded-lg min-h-[400px]">
               <img
-                src={getOptimizedImageUrl(artwork.image_url, 'large')}
+                src={getOptimizedImageUrl(artwork.image_url, 'medium')}
                 alt={artwork.title}
-                className="w-full h-full object-cover rounded-lg"
+                className="max-w-full max-h-[70vh] object-contain rounded-lg"
+                loading="eager"
               />
             </div>
 
             {/* Details Section */}
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between min-h-[400px]">
               <div>
                 <h2 className={`text-3xl font-bold mb-4 ${theme.accent}`}>
                   {artwork.title}
@@ -54,7 +55,7 @@ const Modal = ({ artwork, onClose }) => {
 
               <button
                 onClick={onClose}
-                className={`mt-6 px-6 py-3 ${theme.accent} bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-semibold`}
+                className={`mt-6 px-6 py-3 ${theme.accent} bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-semibold sticky bottom-0`}
               >
                 Close
               </button>

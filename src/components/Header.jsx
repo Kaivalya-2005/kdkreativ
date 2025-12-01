@@ -67,7 +67,7 @@ const Header = () => {
           <span className={`text-4xl font-bold ${theme.accent}`}>KD's Kreativ</span>
         </Link>
 
-        <div className="text-2xl flex items-center space-x-8 gap-5">
+        <div className="text-2xl flex items-center gap-5">
           <button
             onClick={() => {
               if (location.pathname === '/') {
@@ -78,20 +78,16 @@ const Header = () => {
                 window.location.href = '/';
               }
             }}
-            className={`transition-colors font-medium ${isActive('/') && !isAboutInView
-                ? `${theme.accent}`
-                : `${theme.text} hover:${theme.accent}`
-              }`}
+            className={`transition-colors font-medium ${isActive('/') && !isAboutInView ? theme.accent : `${theme.text} hover:${theme.accent}`}`}
           >
             Home
           </button>
-          <Link
-            to="/Gallery"
-            className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${isActive('/Gallery') ? theme.accent : ''
-              }`}
+          <button
+            onClick={() => window.location.href = '/Gallery'}
+            className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${isActive('/Gallery') ? theme.accent : ''}`}
           >
             Gallery
-          </Link>
+          </button>
           <button
             onClick={() => {
               if (location.pathname === '/') {
@@ -105,10 +101,7 @@ const Header = () => {
                 window.location.href = '/';
               }
             }}
-            className={`transition-colors font-medium ${isAboutInView
-                ? `${theme.accent}`
-                : `${theme.text} hover:${theme.accent}`
-              }`}
+            className={`transition-colors font-medium ${isAboutInView ? theme.accent : `${theme.text} hover:${theme.accent}`}`}
           >
             About
           </button>

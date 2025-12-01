@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useArtworks } from '../hooks/useArtworks';
-import ArtworkCard from '../components/ArtworkCard';
 import Modal from '../components/Modal';
 import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 import circleLogo from '../assets/circle.png';
@@ -37,7 +36,7 @@ const Landing = () => {
             aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }
-      }, 100);
+      }, 300);
     } else {
       const timer = setTimeout(() => {
         setShowWelcome(false);
@@ -46,27 +45,35 @@ const Landing = () => {
     }
   }, [skipWelcome]);
 
+  // Separate effect to handle scroll after page load
   useEffect(() => {
-    if (artworks.length > 0) {
-      const featuredCount = artworks.filter(art => art.featured).length;
-      if (featuredCount > 0) {
-        const interval = setInterval(() => {
-          setRotatingIndices((prev) => prev.map((idx) => {
-            const nextIdx = (idx + 1) % featuredCount;
-            return nextIdx;
-          }));
-        }, 4000);
-        return () => clearInterval(interval);
-      }
+    const scrollToAbout = sessionStorage.getItem('scrollToAbout') === 'true';
+    if (scrollToAbout) {
+      sessionStorage.removeItem('scrollToAbout');
+      setTimeout(() => {
+        const aboutSection = document.getElementById('about-section');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    }
+  }, []);
+
+  useEffect(() => {
+    const featuredCount = artworks.filter(art => art.featured).length;
+    if (featuredCount > 0) {
+      const interval = setInterval(() => {
+        setRotatingIndices(prev => prev.map(idx => (idx + 1) % featuredCount));
+      }, 4000);
+      return () => clearInterval(interval);
     }
   }, [artworks]);
 
   // Display artworks are those with display=true
-  const displayArtworks = artworks.filter(art => art.display === true).slice(0, 21);
-  // Featured artworks are those with featured=true
-  const featuredArtworks = artworks.filter(art => art.featured === true);
+  const displayArtworks = artworks.filter(art => art.display).slice(0, 21);
 
-  if (loading) {
+  // Don't show loading during welcome animation
+  if (loading && !showWelcome && skipWelcome) {
     return (
       <div className={`min-h-screen ${theme.bg} flex items-center justify-center`}>
         <div className={`text-2xl ${theme.text}`}>Loading artworks...</div>
@@ -203,10 +210,10 @@ const Landing = () => {
           </div>
 
           {/* View All Button */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30">
             <Link
               to="/Gallery"
-              className={`inline-flex items-center gap-3 px-10 py-5 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+              className={`inline-flex items-center gap-3 px-10 py-5 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
             >
               View All Drawings
               <span className="text-2xl">→</span>
@@ -238,12 +245,12 @@ const Landing = () => {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   style={{ transition: 'transform 0.3s ease-in-out' }}
                 >
-                  <div className="aspect-square overflow-hidden relative group">
+                  <div className="h-96 overflow-hidden relative group">
                     <AnimatePresence mode="wait">
                       <motion.img
                         src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                         alt={artwork.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                         key={`img-${imageIndex}`}
                         initial={{ x: 100, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -252,7 +259,7 @@ const Landing = () => {
                           duration: 1.2,
                           ease: "easeInOut"
                         }}
-                        loading="lazy"
+                        loading="eager"
                       />
                     </AnimatePresence>
                     <motion.div 
@@ -313,12 +320,11 @@ const Landing = () => {
                   className="flex items-center justify-center"
                 >
                   <div className='flex-col items-center justify-center'>
-                    <div className="aspect-square w-80 h-80 overflow-hidden" style={{ borderRadius: '50%' }}>
+                    <div className="aspect-square w-80 h-80 overflow-hidden rounded-full">
                       <img
                         src={profileImage}
                         alt="Kaivalya Deshpande"
-                        className="w-full h-full object-cover"
-                        style={{ borderRadius: '50%' }}
+                        className="w-full h-full object-cover rounded-full"
                       />
                     </div>
                     <div className='py-5 flex items-center justify-center'>
