@@ -257,7 +257,7 @@ const Landing = () => {
                     }}
                     onClick={() => setSelectedArtwork(artwork)}
                   >
-                    <div className="relative w-full h-full rounded-lg overflow-hidden transition-all duration-700 ease-out group-hover:scale-120">
+                    <div className="relative w-full h-full overflow-hidden transition-all duration-700 ease-out group-hover:scale-120">
                       <img
                         src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                         alt={artwork.title}
