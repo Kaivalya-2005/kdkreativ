@@ -16,7 +16,7 @@ export const themes = {
   light: {
     name: 'Light',
     bg: 'bg-[#F3F5F7]',
-    text: 'text-[#374151]',
+    text: 'text-[#374151]/60',
     accent: 'text-[#64748B]',
     card: 'bg-[#FFFFFF]/80',
     hover: 'hover:bg-[#F8FAFC]/80',
@@ -26,7 +26,7 @@ export const themes = {
   ocean: {
     name: 'Ocean',
     bg: 'bg-gradient-to-br from-[#1F2937] via-[#243342] to-[#2C3E50]',
-    text: 'text-[#CDD9E5]',
+    text: 'text-[#CDD9E5]/50',
     accent: 'text-[#94A3B8]',
     card: 'bg-[#1F2937]/80',
     hover: 'hover:bg-[#374151]/80',
@@ -36,7 +36,7 @@ export const themes = {
   solar: {
     name: 'Solar',
     bg: 'bg-gradient-to-br from-[#272121] via-[#382E2C] to-[#443632]',
-    text: 'text-[#D7CCC8]',
+    text: 'text-[#D7CCC8]/50',
     accent: 'text-[#A1887F]',
     card: 'bg-[#2F2525]/80',
     hover: 'hover:bg-[#3E3230]/80',

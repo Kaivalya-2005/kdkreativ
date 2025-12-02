@@ -10,18 +10,48 @@ const Drawings = () => {
   const { artworks, loading } = useArtworks();
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const categories = ['All', 'Featured', 'Recent', 'Popular'];
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down
+        setShowHeader(false);
+      } else {
+        // Scrolling up
+        setShowHeader(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  const categories = ['All', 'Charcoal', 'Pencil Sketch', 'Water Color', 'Color Pencil', 'Ball Pen', 'Others'];
+  
+  const categoryMap = {
+    'Pencil Sketch': 'Pencil sketch',
+    'Water Color': 'Water color',
+    'Color Pencil': 'Color pencil',
+    'Ball Pen': 'Ball pen'
+  };
+
+  const mainCategories = ['Charcoal', 'Pencil sketch', 'Water color', 'Color pencil', 'Ball pen'];
 
   const filteredArtworks = selectedCategory === 'All' 
     ? artworks 
-    : selectedCategory === 'Featured'
-    ? artworks.filter(art => art.featured === true)
-    : artworks;
+    : selectedCategory === 'Others'
+    ? artworks.filter(art => !mainCategories.includes(art.description))
+    : artworks.filter(art => art.description === (categoryMap[selectedCategory] || selectedCategory));
 
   if (loading) {
     return (
@@ -32,10 +62,15 @@ const Drawings = () => {
   }
 
   return (
-    <div className={`min-h-screen ${theme.bg}`}>
+    <div className={`min-h-screen flex-col items-center justify-center ${theme.bg}`}>
       {/* Category Carousel */}
-      <div className={`${theme.card} backdrop-blur-md border-b ${theme.border} sticky top-20 z-40`}>
-        <div className="container mx-auto px-8 py-6 flex items-center gap-6 overflow-x-auto scrollbar-hide">
+      <motion.div 
+        initial={{ y: 0 }}
+        animate={{ y: showHeader ? 0 : -100 }}
+        transition={{ duration: 0.3 }}
+        className={`${theme.card} backdrop-blur-md border-b ${theme.border} sticky top-20 z-40`}
+      >
+        <div className="container text-2xl mx-auto py-1 flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide">
           {categories.map((category) => (
             <motion.button
               key={category}
@@ -52,10 +87,10 @@ const Drawings = () => {
             </motion.button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-8 py-20">
+      <div className="container mx-auto px-8 py-20 flex-col">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,10 +98,10 @@ const Drawings = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className={`text-6xl md:text-8xl font-black mb-6 ${theme.accent} tracking-tight`}>
+          <h1 className={`text-6xl md:text-7xl font-black mb-7 ${theme.accent} tracking-tight p-2`}>
             {selectedCategory === 'All' ? 'All Drawings' : selectedCategory}
           </h1>
-          <p className={`text-xl md:text-2xl ${theme.text} opacity-75 font-light`}>
+          <p className={`text-xl md:text-2xl ${theme.text} opacity-75 font-light p-2`}>
             Showing {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''}
           </p>
         </motion.div>
@@ -103,13 +138,6 @@ const Drawings = () => {
                     <p className="text-sm opacity-90 line-clamp-1">{artwork.description}</p>
                   </motion.div>
                 </div>
-
-                {/* Featured Badge */}
-                {artwork.featured && (
-                  <div className="absolute top-4 right-4 bg-yellow-500/80 text-black px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm">
-                    Featured
-                  </div>
-                )}
               </div>
 
               {/* Info Section */}
@@ -120,9 +148,8 @@ const Drawings = () => {
                 <p className={`text-sm ${theme.text} opacity-60 line-clamp-2 mb-3`}>
                   {artwork.description}
                 </p>
-                <div className="flex items-center justify-between text-xs opacity-50">
+                <div className={`flex ${theme.text} items-center justify-between text-1.5xl opacity-50`}>
                   <span>{artwork.date}</span>
-                  <span>♥ {Math.floor(Math.random() * 200) + 50}</span>
                 </div>
               </div>
             </motion.div>

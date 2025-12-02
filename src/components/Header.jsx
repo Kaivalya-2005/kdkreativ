@@ -68,7 +68,7 @@ const Header = () => {
         </Link>
 
         <div className="text-2xl flex items-center gap-5">
-          <button
+          <motion.button
             onClick={() => {
               if (location.pathname === '/') {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -78,17 +78,29 @@ const Header = () => {
                 window.location.href = '/';
               }
             }}
-            className={`transition-colors font-medium ${isActive('/') && !isAboutInView ? theme.accent : `${theme.text} hover:${theme.accent}`}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
+              isActive('/') && !isAboutInView 
+                ? `${theme.accent}` 
+                : `${theme.text} opacity-70 hover:opacity-100`
+            }`}
           >
             Home
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => window.location.href = '/Gallery'}
-            className={`${theme.text} hover:${theme.accent} transition-colors font-medium ${isActive('/Gallery') ? theme.accent : ''}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
+              isActive('/Gallery')
+                ? `${theme.accent}`
+                : `${theme.text} opacity-70 hover:opacity-100`
+            }`}
           >
             Gallery
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => {
               if (location.pathname === '/') {
                 const aboutSection = document.getElementById('about-section');
@@ -101,10 +113,16 @@ const Header = () => {
                 window.location.href = '/';
               }
             }}
-            className={`transition-colors font-medium ${isAboutInView ? theme.accent : `${theme.text} hover:${theme.accent}`}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
+              isAboutInView 
+                ? `${theme.accent}` 
+                : `${theme.text} opacity-70 hover:opacity-100`
+            }`}
           >
             About
-          </button>
+          </motion.button>
 
           {/* Theme Switcher */}
           <div className="relative group">

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useArtworks } from '../hooks/useArtworks';
 import Modal from '../components/Modal';
+import CountUp from '../components/CountUp';
 import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 import circleLogo from '../assets/circle.png';
 import nameLogo from '../assets/name.png';
@@ -168,45 +169,106 @@ const Landing = () => {
             KD's KREATIV
           </motion.h2>
           </div>
-
-          {/* Artworks with varying sizes - reveals on cursor hover */}
+          {/* 21 Artworks Grid - Based on Figma Design */}
           <div className="absolute inset-0">
-            {displayArtworks.map((artwork, index) => {
-              // Generate random positions and sizes for each artwork
-              const sizes = ['w-32 h-32', 'w-40 h-40', 'w-36 h-36', 'w-44 h-44', 'w-48 h-48', 'w-28 h-28', 'w-52 h-52'];
-              const size = sizes[index % sizes.length];
-
-              // Calculate grid-like positions but with some randomness
-              const row = Math.floor(index / 7);
-              const col = index % 7;
-              const topPercent = (row * 25) + (Math.random() * 10 - 5);
-              const leftPercent = (col * 14) + (Math.random() * 8 - 4);
-
-              return (
-                <motion.div
-                  key={artwork.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`absolute ${size} cursor-pointer group`}
-                  style={{
-                    top: `${topPercent}%`,
-                    left: `${leftPercent}%`,
-                  }}
-                  onClick={() => setSelectedArtwork(artwork)}
-                >
-                  {/* Hidden by default, reveals on hover */}
-                  <div className="relative w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <img
-                      src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
-                      alt={artwork.title}
-                      className="w-full h-full object-cover rounded-lg shadow-2xl"
-                      loading="lazy"
-                    />
-                  </div>
-                </motion.div>
-              );
-            })}
+            {(() => {
+              // Array of 21 artwork IDs in order of position (replace these IDs with your actual artwork IDs)
+              const artworkIds = [
+                18, 48, 9, 14, 44, 20, 49, 27, 22, 13, 43, 42, 23, 24, 51, 19, 28, 25, 26, 46, 17, 40
+              ];
+              
+              const layouts = [
+                // 1
+                { width: 160, height: 200, top: 0, left: 0 },
+                // 2
+                { width: 212, height:290, top: 200, left: 0 },
+                // 3
+                { width: 212, height: 212, top: 490, left: 0 },
+                
+                // 4
+                { width: 150, height: 212, top: 490, left: 212 },
+                // 5
+                { width: 150, height: 150, top: 340, left: 212 },
+                // 6
+                { width: 240, height: 340, top: 0, left: 160 },
+                
+                // 7 
+                { width: 162, height: 251, top: 0, left: 400 },
+                // 8
+                { width: 273, height: 451, top: 251, left: 362 },
+                
+                // 9 
+                { width: 138, height: 172, top: 530, left: 635 },
+                // 10
+                { width: 110, height: 172, top: 530, left: 773 },
+                // 11
+                { width: 248, height: 279, top: 251, left: 635 },
+                // 12 
+                { width: 321, height: 251, top: 0, left: 562 },
+                
+                // 13
+                { width: 280, height: 440, top: 0, left: 883 },
+                // 14 
+                { width: 188, height: 262, top: 440, left: 883 },
+                
+                // 15
+                { width: 152, height: 262, top: 440, left: 1071 },
+                // 16
+                { width:120, height: 189, top: 513, left: 1223 },
+                // 17
+                { width: 222, height: 262, top: 251, left: 1163 },
+                
+                // 18
+                { width: 222, height: 252, top: 0, left: 1163 },
+                // 19 
+                { width: 150, height: 202, top: 0, left: 1385 },
+                
+                // 20 
+                { width: 150, height: 152, top: 202, left: 1385 },
+                // 21 
+                { width: 150, height: 159, top: 354, left: 1385 },
+                // 22 
+                { width: 192, height: 189, top: 513, left: 1343 }
+              ];
+              
+              return artworkIds.map((artworkId, index) => {
+                const artwork = artworks.find(art => art.id === artworkId);
+                if (!artwork) return null;
+                
+                const layout = layouts[index];
+                
+                return (
+                  <motion.div
+                    key={artwork.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      delay: index * 0.05,
+                      duration: 0.6,
+                      ease: "easeOut"
+                    }}
+                    className="absolute cursor-pointer group"
+                    style={{
+                      width: `${layout.width}px`,
+                      height: `${layout.height}px`,
+                      top: `${layout.top}px`,
+                      left: `${layout.left}px`
+                    }}
+                    onClick={() => setSelectedArtwork(artwork)}
+                  >
+                    <div className="relative w-full h-full rounded-lg overflow-hidden transition-all duration-700 ease-out group-hover:scale-120">
+                      <img
+                        src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
+                        alt={artwork.title}
+                        className="w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-900 ease-in-out"
+                        loading="lazy"
+                      />
+                    </div>
+                  </motion.div>
+                );
+              });
+            })()}
           </div>
 
           {/* View All Button */}
@@ -373,11 +435,15 @@ const Landing = () => {
               className="grid grid-cols-1 md:grid-cols-3 gap-10 py-7"
             >
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>50+</div>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>
+                  <CountUp from={0} to={50} separator="" direction="up" duration={2} className="count-up-text" />+
+                </div>
                 <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Artworks Created</div>
               </div>
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>10+</div>
+                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>
+                  <CountUp from={0} to={10} separator="" direction="up" duration={2} className="count-up-text" />+
+                </div>
                 <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Years of Experience</div>
               </div>
               <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
