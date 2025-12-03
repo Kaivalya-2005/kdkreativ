@@ -27,6 +27,9 @@ export const getOptimizedImageUrl = (url, size = 'medium') => {
     // Large size for full screen view - 2000px wide
     large: 'f_auto,q_auto:best,w_2000',
     
+    // Ultra high quality - maximum quality with no compression
+    ultra: 'q_100,fl_preserve_transparency',
+    
     // Original size with format optimization only
     full: 'f_auto,q_auto:best'
   };
