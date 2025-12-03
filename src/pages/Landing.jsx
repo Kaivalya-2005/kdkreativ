@@ -257,7 +257,7 @@ const Landing = () => {
                     }}
                     onClick={() => setSelectedArtwork(artwork)}
                   >
-                    <div className="relative w-full h-full overflow-hidden transition-all duration-700 ease-out group-hover:scale-120">
+                    <div className="relative w-full h-full overflow-hidden transition-all duration-700 ease-out group-hover:scale-130">
                       <img
                         src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                         alt={artwork.title}
@@ -333,7 +333,7 @@ const Landing = () => {
                     className="p-4 bg-linear-to-t from-black/40 to-transparent"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
                   >
                     <h3 className={`text-lg font-bold ${theme.accent} truncate`}>
                       {artwork.title}
