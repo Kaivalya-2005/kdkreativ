@@ -151,10 +151,90 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-19 pb-10 flex-col items-center justify-center">
+      <div className="pt-10 md:pt-19 pb-1 flex-col items-center justify-center">
 
-        {/* Top 21 Artworks Grid - Interactive Hover Reveal */}
-        <section className="relative w-full h-176 mb-32 overflow-hidden">
+        {/* Mobile Hero Section - Animated Carousel */}
+        <section className="md:hidden relative w-full px-4 py-8 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-8"
+          >
+            <h1 className={`text-4xl pb-2 font-extrabold mb-3 ${theme.accent} tracking-tight`}>
+              KD's Kreativ
+            </h1>
+            <p className={`text-sm  pb-2 ${theme.text} opacity-75`}>
+              Where Art Meets Imagination
+            </p>
+          </motion.div>
+
+          {/* Mobile Artwork Carousel */}
+          <div className="mb-6">
+            <AnimatePresence mode="wait">
+              {(() => {
+                const featuredArtworks = artworks.filter(art => art.featured);
+                const currentArtwork = featuredArtworks[rotatingIndices[0]];
+                if (!currentArtwork) return null;
+                return (
+                  <motion.div
+                    key={rotatingIndices[0]}
+                    initial={{ opacity: 0, scale: 0.9, rotateY: 90 }}
+                    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, rotateY: -90 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedArtwork(currentArtwork)}
+                  >
+                    {/* Image Container */}
+                    <div className="relative h-96 mb-4 overflow-hidden rounded-2xl">
+                      <img
+                        src={getOptimizedImageUrl(currentArtwork.image_url, 'thumb')}
+                        alt={currentArtwork.title}
+                        className="w-full h-full object-contain rounded-2xl"
+                        loading="eager"
+                      />
+                      {/* Carousel Indicators on Image */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                        {artworks.filter(art => art.featured).slice(0, 4).map((_, index) => (
+                          <div
+                            key={index}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                              index === rotatingIndices[0] % artworks.filter(art => art.featured).length
+                                ? `w-8 ${theme.accent.replace('text-', 'bg-')}`
+                                : 'w-2 bg-white/40'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Title and Description Below Image */}
+                    <div className={`${theme.card} p-4 rounded-2xl border-2 ${theme.border} backdrop-blur-md shadow-lg`}>
+                      <h3 className={`text-lg font-bold ${theme.accent} truncate`}>
+                        {currentArtwork.title}
+                      </h3>
+                      <p className={`text-xs ${theme.text} opacity-75 line-clamp-2 mt-1`}>
+                        {currentArtwork.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })()}
+            </AnimatePresence>
+          </div>
+
+          {/* View All Button */}
+          <Link
+            to="/Gallery"
+            className={`w-full block text-center px-8 py-4 ${theme.accent} bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 font-bold text-base shadow-lg`}
+          >
+            View All Drawings →
+          </Link>
+        </section>
+
+        {/* Top 21 Artworks Grid - Interactive Hover Reveal (Desktop Only) */}
+        <section className="hidden md:block relative w-full h-176 mb-32 overflow-hidden">
           {/* Black overlay with 20% opacity */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
@@ -283,17 +363,17 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* Best Artwork Section - 4 Rotating Images with 12 Artworks */}
-        <section className="container mx-auto px-10 py-10 mb-32 scroll-mt-20">
+        {/* Best Artwork Section - 4 Rotating Images with 12 Artworks (Desktop Only) */}
+        <section className="hidden md:block container mx-auto px-4 md:px-10 py-10 mb-16 md:mb-32 scroll-mt-20">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className={`text-4xl md:text-6xl py-5 font-extrabold mb-16 ${theme.accent} tracking-tight text-center`}
+            className={`text-3xl md:text-6xl py-3 md:py-5 font-extrabold mb-8 md:mb-16 ${theme.accent} tracking-tight text-center`}
           >
             Featured Artworks
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 py-3 md:py-5">
             {rotatingIndices.map((imageIndex, position) => {
               const featuredArtworks = artworks.filter(art => art.featured);
               const artwork = featuredArtworks[imageIndex];
@@ -307,7 +387,7 @@ const Landing = () => {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   style={{ transition: 'transform 0.3s ease-in-out' }}
                 >
-                  <div className="h-96 overflow-hidden relative group">
+                  <div className="h-64 md:h-96 overflow-hidden relative group">
                     <AnimatePresence mode="wait">
                       <motion.img
                         src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
@@ -329,19 +409,26 @@ const Landing = () => {
                       whileHover={{ backgroundColor: "rgba(0,0,0,0.3)" }}
                     />
                   </div>
-                  <motion.div 
-                    className="p-4 bg-linear-to-t from-black/40 to-transparent"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8, duration: 0.6 }}
-                  >
-                    <h3 className={`text-lg font-bold ${theme.accent} truncate`}>
-                      {artwork.title}
-                    </h3>
-                    <p className={`text-sm ${theme.text} opacity-75 line-clamp-1 mt-1`}>
-                      {artwork.description}
-                    </p>
-                  </motion.div>
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={`text-${imageIndex}`}
+                      className="p-3 md:p-4 bg-linear-to-t from-black/40 to-transparent"
+                      initial={{ x: 100, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -100, opacity: 0 }}
+                      transition={{ 
+                        duration: 1.2,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <h3 className={`text-lg font-bold ${theme.accent} truncate`}>
+                        {artwork.title}
+                      </h3>
+                      <p className={`text-sm ${theme.text} opacity-75 line-clamp-1 mt-1`}>
+                        {artwork.description}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               );
             })}
@@ -349,7 +436,7 @@ const Landing = () => {
         </section>
 
         {/* About Artist Preview */}
-        <section id="about-section" className="container mx-auto px-8 py-5 scroll-mt-24 flex items-center justify-center">
+        <section id="about-section" className="container mx-auto px-4 md:px-8 py-5 scroll-mt-10 md:scroll-mt-16 flex items-center justify-center">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <motion.div
@@ -357,9 +444,9 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-20"
+              className="text-center mb-10 md:mb-20"
             >
-              <h1 className={`text-4xl md:text-6xl py-5 font-black mb-8 ${theme.accent} tracking-tight leading-tight`}>
+              <h1 className={`text-3xl md:text-6xl py-3 md:py-5 font-black mb-4 md:mb-8 ${theme.accent} tracking-tight leading-tight`}>
                 About the Artist
               </h1>
             </motion.div>
@@ -372,7 +459,7 @@ const Landing = () => {
               transition={{ delay: 0.2, duration: 0.8 }}
               className={`${theme.card} rounded-3xl overflow-hidden shadow-2xl border-2 ${theme.border} backdrop-blur-md mb-20`}
             >
-              <div className="grid md:grid-cols-2 gap-16 md:p-10">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-16 p-6 md:p-10">
                 {/* Image Section */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -382,15 +469,15 @@ const Landing = () => {
                   className="flex items-center justify-center"
                 >
                   <div className='flex-col items-center justify-center'>
-                    <div className="aspect-square w-80 h-80 overflow-hidden rounded-full">
+                    <div className="aspect-square w-48 h-48 md:w-80 md:h-80 overflow-hidden rounded-full">
                       <img
                         src={profileImage}
                         alt="Kaivalya Deshpande"
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className='py-5 flex items-center justify-center'>
-                      <h2 className={`text-4xl md:text-4xl font-black mb-10 ${theme.accent} tracking-tight leading-tight`}>
+                    <div className='py-4 md:py-5 flex items-center justify-center'>
+                      <h2 className={`text-2xl md:text-4xl font-black mb-4 md:mb-10 ${theme.accent} tracking-tight leading-tight`}>
                         Kaivalya Deshpande
                       </h2>
                     </div>
@@ -405,7 +492,7 @@ const Landing = () => {
                   transition={{ delay: 0.6, duration: 0.8 }}
                   className="flex flex-col justify-center"
                 >
-                  <div className={`${theme.text} space-y-6 text-lg md:text-xl opacity-90 leading-relaxed`}>
+                  <div className={`${theme.text} space-y-4 md:space-y-6 text-center md:text-xl opacity-90 leading-relaxed`}>
                     <p>
                       A passionate artist with a unique vision for transforming everyday moments
                       into extraordinary visual narratives. Through a diverse range of mediums
@@ -432,23 +519,23 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-10 py-7"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 py-5 md:py-7"
             >
-              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>
+              <div className={`${theme.card} rounded-2xl p-8 md:p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-5xl md:text-7xl font-black mb-3 md:mb-4 ${theme.accent} tracking-tight`}>
                   <CountUp from={0} to={50} separator="" direction="up" duration={2} className="count-up-text" />+
                 </div>
-                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Artworks Created</div>
+                <div className={`${theme.text} opacity-85 text-base md:text-xl font-semibold`}>Artworks Created</div>
               </div>
-              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>
+              <div className={`${theme.card} rounded-2xl p-8 md:p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-5xl md:text-7xl font-black mb-3 md:mb-4 ${theme.accent} tracking-tight`}>
                   <CountUp from={0} to={10} separator="" direction="up" duration={2} className="count-up-text" />+
                 </div>
-                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Years of Experience</div>
+                <div className={`${theme.text} opacity-85 text-base md:text-xl font-semibold`}>Years of Experience</div>
               </div>
-              <div className={`${theme.card} rounded-2xl p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
-                <div className={`text-7xl font-black mb-4 ${theme.accent} tracking-tight`}>∞</div>
-                <div className={`${theme.text} opacity-85 text-xl font-semibold`}>Endless Creativity</div>
+              <div className={`${theme.card} rounded-2xl p-8 md:p-12 text-center border-2 ${theme.border} backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105`}>
+                <div className={`text-5xl md:text-7xl font-black mb-3 md:mb-4 ${theme.accent} tracking-tight`}>∞</div>
+                <div className={`${theme.text} opacity-85 text-base md:text-xl font-semibold`}>Endless Creativity</div>
               </div>
             </motion.div>
 
@@ -458,12 +545,12 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className={`${theme.card} rounded-3xl md:p-15 mb-20 border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
+              className={`${theme.card} rounded-3xl p-6 md:p-15 mb-12 md:mb-20 border-2 ${theme.border} backdrop-blur-md shadow-2xl`}
             >
-              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.accent} text-center tracking-tight`}>
+              <h3 className={`text-2xl md:text-5xl font-black mb-6 md:mb-10 ${theme.accent} text-center tracking-tight`}>
                 Artistic Philosophy
               </h3>
-              <p className={`${theme.text} text-xl md:text-2xl opacity-90 text-center max-w-5xl mx-auto font-light leading-relaxed italic`}>
+              <p className={`${theme.text} text-base md:text-2xl opacity-90 text-center max-w-5xl mx-auto font-light leading-relaxed italic`}>
                 "Art is not what you see, but what you make others see. Through every stroke,
                 every color, and every composition, I strive to create connections that transcend
                 the visual and touch the soul. My work is an ongoing dialogue between imagination
@@ -477,15 +564,15 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center py-13"
+              className="text-center py-8 md:py-13"
             >
-              <h3 className={`text-4xl md:text-5xl font-black mb-10 ${theme.accent} tracking-tight`}>
+              <h3 className={`text-2xl md:text-5xl font-black mb-6 md:mb-10 ${theme.accent} tracking-tight`}>
                 Get in Touch
               </h3>
-              <div className="flex flex-wrap justify-center gap-8 py-7">
+              <div className="flex flex-col md:flex-row flex-wrap justify-center gap-4 md:gap-8 py-4 md:py-7">
                 <a
                   href="mailto:contact@kdkreativ.com"
-                  className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+                  className={`px-8 md:px-12 py-4 md:py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-base md:text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
                 >
                   Email Me
                 </a>
@@ -493,7 +580,7 @@ const Landing = () => {
                   href="https://instagram.com/kaivalya738"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-12 py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+                  className={`px-8 md:px-12 py-4 md:py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-base md:text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
                 >
                   Follow on Instagram
                 </a>
