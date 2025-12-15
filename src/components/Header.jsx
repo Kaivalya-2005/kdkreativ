@@ -86,7 +86,7 @@ const Header = () => {
           </svg>
         </button>
 
-        <div className="hidden md:flex text-2xl items-center gap-5 flex-shrink-0">
+        <div className="hidden md:flex text-2xl items-center gap-5 shrink-0">
           <motion.button
             onClick={() => {
               if (location.pathname === '/') {
