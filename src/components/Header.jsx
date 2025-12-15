@@ -43,8 +43,9 @@ const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 ${theme.card} backdrop-blur-lg md:bg-opacity-60 border-b ${theme.border}`}
+      style={{ WebkitBackdropFilter: 'blur(16px)' }}
     >
-      <nav className="container mx-auto px-4 md:px-9 py-1.5 md:py-1.5 flex items-center justify-between">
+      <nav className="w-full max-w-[1920px] mx-auto px-4 md:px-9 py-1.5 md:py-1.5 flex items-center justify-between">
         <Link to="/" onClick={() => {
           sessionStorage.setItem('skipWelcome', 'true');
           sessionStorage.setItem('scrollToTop', 'true');
@@ -85,7 +86,7 @@ const Header = () => {
           </svg>
         </button>
 
-        <div className="hidden md:flex text-2xl items-center gap-5">
+        <div className="hidden md:flex text-2xl items-center gap-5 flex-shrink-0">
           <motion.button
             onClick={() => {
               if (location.pathname === '/') {

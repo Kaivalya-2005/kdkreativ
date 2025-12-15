@@ -83,7 +83,7 @@ const Landing = () => {
   }
 
   return (
-    <div className={`min-h-screen ${theme.bg}`}>
+    <div className={`min-h-screen ${theme.bg}`} style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
       {/* Cinematic Welcome Animation */}
       {showWelcome && (
         <motion.div
@@ -151,7 +151,7 @@ const Landing = () => {
       )}
 
       {/* Main Content */}
-      <div className="pt-10 md:pt-19 pb-1 flex-col items-center justify-center">
+      <div className="pt-10 md:pt-19 pb-1 flex-col items-center justify-center" style={{ minHeight: '100vh' }}>
 
         {/* Mobile Hero Section - Animated Carousel */}
         <section className="md:hidden relative w-full px-4 py-8 mb-12">
@@ -189,10 +189,12 @@ const Landing = () => {
                     {/* Image Container */}
                     <div className="relative h-96 mb-4 overflow-hidden rounded-2xl">
                       <img
-                        src={getOptimizedImageUrl(currentArtwork.image_url, 'thumb')}
+                        src={getOptimizedImageUrl(currentArtwork.image_url, 'medium')}
                         alt={currentArtwork.title}
                         className="w-full h-full object-contain rounded-2xl"
                         loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                       />
                       {/* Carousel Indicators on Image */}
                       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
@@ -322,11 +324,19 @@ const Landing = () => {
                     key={artwork.id}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.2 }}
                     transition={{ 
                       delay: index * 0.05,
                       duration: 0.6,
                       ease: "easeOut"
+                    }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      zIndex: 50,
+                      transition: { 
+                        duration: 0.5,
+                        ease: [0.34, 1.56, 0.64, 1]
+                      }
                     }}
                     className="absolute cursor-pointer group"
                     style={{
@@ -337,14 +347,36 @@ const Landing = () => {
                     }}
                     onClick={() => setSelectedArtwork(artwork)}
                   >
-                    <div className="relative w-full h-full overflow-hidden transition-all duration-700 ease-out group-hover:scale-130">
-                      <img
+                    <motion.div 
+                      className="relative w-full h-full overflow-hidden rounded-lg shadow-lg"
+                      whileHover={{ 
+                        boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+                        transition: { duration: 0.4, ease: "easeOut" }
+                      }}
+                    >
+                      <motion.img
                         src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                         alt={artwork.title}
-                        className="w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-900 ease-in-out"
+                        className="w-full h-full object-contain"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ 
+                          opacity: 1,
+                          transition: { 
+                            duration: 0.6,
+                            ease: [0.4, 0, 0.2, 1]
+                          }
+                        }}
+                        animate={{ 
+                          opacity: 0,
+                          transition: { 
+                            duration: 0.5,
+                            ease: [0.4, 0, 1, 1]
+                          }
+                        }}
                         loading="lazy"
+                        decoding="async"
                       />
-                    </div>
+                    </motion.div>
                   </motion.div>
                 );
               });
@@ -364,7 +396,7 @@ const Landing = () => {
         </section>
 
         {/* Best Artwork Section - 4 Rotating Images with 12 Artworks (Desktop Only) */}
-        <section className="hidden md:block container mx-auto px-4 md:px-10 py-10 mb-16 md:mb-32 scroll-mt-20">
+        <section className="hidden md:block w-full max-w-[1920px] mx-auto px-4 md:px-10 py-10 mb-16 md:mb-32 scroll-mt-20">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -402,6 +434,7 @@ const Landing = () => {
                           ease: "easeInOut"
                         }}
                         loading="eager"
+                        decoding="async"
                       />
                     </AnimatePresence>
                     <motion.div 
@@ -436,7 +469,7 @@ const Landing = () => {
         </section>
 
         {/* About Artist Preview */}
-        <section id="about-section" className="container mx-auto px-4 md:px-8 py-5 scroll-mt-10 md:scroll-mt-16 flex items-center justify-center">
+        <section id="about-section" className="w-full max-w-[1920px] mx-auto px-4 md:px-8 py-5 scroll-mt-10 md:scroll-mt-16 flex items-center justify-center">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <motion.div
@@ -474,6 +507,8 @@ const Landing = () => {
                         src={profileImage}
                         alt="Kaivalya Deshpande"
                         className="w-full h-full object-cover rounded-full"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                     <div className='py-4 md:py-5 flex items-center justify-center'>
