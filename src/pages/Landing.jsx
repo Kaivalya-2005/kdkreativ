@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useArtworks } from '../hooks/useArtworks';
 import Modal from '../components/Modal';
 import CountUp from '../components/CountUp';
+import Loading from '../components/Loading';
 import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 import circleLogo from '../assets/circle.png';
 import nameLogo from '../assets/name.png';
@@ -75,11 +76,7 @@ const Landing = () => {
 
   // Don't show loading during welcome animation
   if (loading && !showWelcome && skipWelcome) {
-    return (
-      <div className={`min-h-screen ${theme.bg} flex items-center justify-center`}>
-        <div className={`text-2xl ${theme.text}`}>Loading artworks...</div>
-      </div>
-    );
+    return <Loading message="Loading artworks..." />;
   }
 
   return (
@@ -157,7 +154,7 @@ const Landing = () => {
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ scaleX: 1, opacity: 1 }}
                 transition={{ delay: 1.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="h-px w-32 bg-linear-to-r from-transparent via-green-400 to-transparent"
+                className="h-px w-96 bg-linear-to-r from-transparent via-green-400 to-transparent"
               />
               
               <motion.p

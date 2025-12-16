@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { useArtworks } from '../hooks/useArtworks';
 import Modal from '../components/Modal';
+import Loading from '../components/Loading';
 import { getOptimizedImageUrl } from '../utils/imageOptimizer';
 
 const Drawings = () => {
@@ -54,11 +55,7 @@ const Drawings = () => {
     : artworks.filter(art => art.description === (categoryMap[selectedCategory] || selectedCategory));
 
   if (loading) {
-    return (
-      <div className={`min-h-screen ${theme.bg} flex items-center justify-center pt-24`}>
-        <div className={`text-2xl ${theme.text}`}>Loading artworks...</div>
-      </div>
-    );
+    return <Loading message="Loading artworks..." />;
   }
 
   return (
