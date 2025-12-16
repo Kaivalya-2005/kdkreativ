@@ -62,24 +62,25 @@ const Drawings = () => {
   }
 
   return (
-    <div className={`min-h-screen flex-col items-center justify-center ${theme.bg}`}>
+    <div className={`min-h-screen flex-col items-center justify-center ${theme.bg}`} style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
       {/* Category Carousel */}
       <motion.div 
         initial={{ y: 0 }}
         animate={{ y: showHeader ? 0 : -100 }}
         transition={{ duration: 0.3 }}
         className={`${theme.card} backdrop-blur-md border-b ${theme.border} sticky top-20 z-40`}
+        style={{ WebkitBackdropFilter: 'blur(16px)' }}
       >
-        <div className="container text-2xl mx-auto py-1 flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide">
+        <div className="w-full max-w-[1920px] mx-auto py-3 md:py-4 flex items-center justify-start md:justify-center gap-3 md:gap-6 overflow-x-auto scrollbar-hide px-4 md:px-6">
           {categories.map((category) => (
             <motion.button
               key={category}
               onClick={() => setSelectedCategory(category)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-8 py-3 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 ${
+              className={`px-4 md:px-8 py-2 md:py-3 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 text-sm md:text-2xl ${
                 selectedCategory === category
-                  ? `${theme.accent} bg-white/10`
+                  ? `${theme.accent} bg-white/10 shadow-md`
                   : `${theme.text} opacity-70 hover:opacity-100`
               }`}
             >
@@ -90,7 +91,7 @@ const Drawings = () => {
       </motion.div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-8 py-20 flex-col">
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 py-20 flex-col">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -107,7 +108,7 @@ const Drawings = () => {
         </motion.div>
 
         {/* Artworks Grid - Behance Style */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 auto-rows-max justify-items-center">
           {filteredArtworks.map((artwork, index) => (
             <motion.div
               key={artwork.id}
@@ -118,12 +119,14 @@ const Drawings = () => {
               className="group cursor-pointer"
             >
               {/* Image Container */}
-              <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} h-96`}>
+              <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} w-full aspect-square flex items-center justify-center bg-black/5`}>
                 <img
                   src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                   alt={artwork.title}
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
+                  style={{ imageRendering: 'high-quality' }}
                 />
                 
                 {/* Overlay */}
