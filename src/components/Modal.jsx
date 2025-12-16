@@ -115,7 +115,7 @@ const Modal = ({ artwork, onClose }) => {
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           onClick={(e) => e.stopPropagation()}
-          className={`${theme.card} rounded-xl md:rounded-2xl max-w-5xl w-full h-auto md:max-h-[90vh] md:overflow-y-auto shadow-2xl`}
+          className={`${theme.card} rounded-lg max-w-5xl w-full h-auto md:max-h-[90vh] md:overflow-y-auto shadow-lg`}
         >
           {/* Mobile Layout - Vertical Stack */}
           <div className="md:hidden flex flex-col max-h-[95vh]">

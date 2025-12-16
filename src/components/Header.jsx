@@ -10,9 +10,23 @@ const Header = () => {
   const location = useLocation();
   const [isAboutInView, setIsAboutInView] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [logoRotation, setLogoRotation] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Logo rotation based on scroll direction
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down - rotate clockwise
+        setLogoRotation(prev => prev - (currentScrollY - lastScrollY) * 0.2);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - rotate counter-clockwise
+        setLogoRotation(prev => prev + (lastScrollY - currentScrollY) * 0.2);
+      }
+      setLastScrollY(currentScrollY);
+      
       if (location.pathname === '/') {
         const aboutSection = document.getElementById('about-section');
         if (aboutSection) {
@@ -33,7 +47,7 @@ const Header = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+  }, [location.pathname, lastScrollY]);
 
   const isActive = (path) => location.pathname === path;
 
@@ -55,10 +69,8 @@ const Header = () => {
             <motion.img
               src={circleLogo}
               alt="KD Kreativ Logo"
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', rotate: `${logoRotation}deg` }}
               className="absolute inset-0"
-              animate={{ rotate: [360, 0] }}
-              transition={{ duration: 5, ease: 'linear', repeat: Infinity }}
             />
             <motion.img
               src={nameLogo}

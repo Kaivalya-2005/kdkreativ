@@ -119,7 +119,7 @@ const Drawings = () => {
               className="group cursor-pointer"
             >
               {/* Image Container */}
-              <div className={`relative overflow-hidden rounded-2xl ${theme.card} border-2 ${theme.border} w-full aspect-square flex items-center justify-center bg-black/5`}>
+              <div className={`relative overflow-hidden rounded-lg ${theme.card} border ${theme.border} w-full aspect-square flex items-center justify-center bg-black/5`}>
                 <img
                   src={getOptimizedImageUrl(artwork.image_url, 'thumb')}
                   alt={artwork.title}

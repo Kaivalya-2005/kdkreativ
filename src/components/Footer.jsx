@@ -21,7 +21,7 @@ const Footer = () => {
               Instagram
             </a>
             <a 
-              href="mailto:contact@kdkreativ.com"
+              href="mailto:kaivalya.deshpande2005@gmail.com"
               className={`px-1.5 md:px-3 text-sm md:text-base ${theme.text} hover:${theme.accent} transition-colors`}
             >
               Contact

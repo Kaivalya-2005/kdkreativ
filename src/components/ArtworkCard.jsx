@@ -9,9 +9,9 @@ const ArtworkCard = ({ artwork, onClick, index = 0 }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      whileHover={{ scale: 1.05, y: -5 }}
+      whileHover={{ scale: 1.02 }}
       onClick={onClick}
-      className={`${theme.card} rounded-xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 group border ${theme.border}`}
+      className={`${theme.card} rounded-lg overflow-hidden cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 group border ${theme.border}`}
     >
       <div className="relative overflow-hidden aspect-square">
         <img

@@ -25,12 +25,12 @@ export const themes = {
 
   ocean: {
     name: 'Ocean',
-    bg: 'bg-gradient-to-br from-[#1F2937] via-[#243342] to-[#2C3E50]',
-    text: 'text-[#CDD9E5]/50',
-    accent: 'text-[#94A3B8]',
-    card: 'bg-[#1F2937]/80',
-    hover: 'hover:bg-[#374151]/80',
-    border: 'border-[#475569]'
+    bg: 'bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]',
+    text: 'text-[#94A3B8]',
+    accent: 'text-[#E2E8F0]',
+    card: 'bg-[#1E293B]/70',
+    hover: 'hover:bg-[#334155]/70',
+    border: 'border-[#334155]/50'
   }
 };
 
