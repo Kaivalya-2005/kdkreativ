@@ -598,7 +598,7 @@ const Landing = () => {
                         href="https://instagram.com/kaivalya738"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-full transition-all duration-300 hover:scale-105 shadow-md backdrop-blur-sm border border-white/20 hover:bg-gradient-to-br hover:from-[#833AB4] hover:via-[#E1306C] hover:to-[#FD1D1D] hover:shadow-[0_0_20px_rgba(225,48,108,0.6)]"
+                        className="group inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-full transition-all duration-300 hover:scale-105 shadow-md backdrop-blur-sm border border-white/20 hover:bg-linear-to-br hover:from-[#833AB4] hover:via-[#E1306C] hover:to-[#FD1D1D] hover:shadow-[0_0_20px_rgba(225,48,108,0.6)]"
                         aria-label="Follow on Instagram"
                       >
                         <svg
