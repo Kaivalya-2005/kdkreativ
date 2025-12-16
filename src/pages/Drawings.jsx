@@ -94,7 +94,7 @@ const Drawings = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-16 py-2.5"
         >
           <h1 className={`text-6xl md:text-7xl font-black mb-7 ${theme.accent} tracking-tight p-2`}>
             {selectedCategory === 'All' ? 'All Drawings' : selectedCategory}
