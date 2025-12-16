@@ -1,10 +1,16 @@
+import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
 const Footer = () => {
   const { theme } = useTheme();
 
   return (
-    <footer className={`${theme.card} border-t ${theme.border} py-4 md:py-8 mt-8 md:mt-20`}>
+    <motion.footer
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 2 }}
+      className={`${theme.card} border-t ${theme.border} py-4 md:py-8 mt-8 md:mt-20`}
+    >
       <div className="container mx-auto px-3 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0">
           <div className={`${theme.text} text-sm md:text-sm mb-1 md:mb-0 text-center md:text-left`}>
@@ -29,7 +35,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

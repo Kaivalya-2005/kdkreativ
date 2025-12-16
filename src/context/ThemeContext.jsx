@@ -44,9 +44,38 @@ export const ThemeProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Update body, html background, and meta theme-color when theme changes
+    const root = document.documentElement;
+    const body = document.body;
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+    if (currentTheme === 'light') {
+      root.style.backgroundColor = '#F3F5F7';
+      body.style.backgroundColor = '#F3F5F7';
+      if (metaThemeColor) metaThemeColor.setAttribute('content', '#F3F5F7');
+    } else if (currentTheme === 'ocean') {
+      root.style.background = 'linear-gradient(to bottom right, #0F172A, #1E293B, #0F172A)';
+      body.style.background = 'linear-gradient(to bottom right, #0F172A, #1E293B, #0F172A)';
+      if (metaThemeColor) metaThemeColor.setAttribute('content', '#0F172A');
+    } else {
+      root.style.backgroundColor = '#1C1E22';
+      body.style.backgroundColor = '#1C1E22';
+      if (metaThemeColor) metaThemeColor.setAttribute('content', '#1C1E22');
+    }
+  }, [currentTheme]);
+
   const changeTheme = (themeName) => {
     setCurrentTheme(themeName);
     localStorage.setItem('kdkreativ-theme', themeName);
+    
+    // Store background color info
+    const bgColors = {
+      dark: '#1C1E22',
+      light: '#F3F5F7',
+      ocean: '#0F172A'
+    };
+    localStorage.setItem('kdkreativ-theme-bg', bgColors[themeName]);
   };
 
   return (
