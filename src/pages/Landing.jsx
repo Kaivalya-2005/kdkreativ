@@ -24,7 +24,7 @@ const Landing = () => {
 
     if (skipWelcome) {
       sessionStorage.removeItem('skipWelcome');
-      
+
       // Handle scrolling based on flags
       setTimeout(() => {
         if (scrollToTop) {
@@ -201,11 +201,10 @@ const Landing = () => {
                         {artworks.filter(art => art.featured).slice(0, 4).map((_, index) => (
                           <div
                             key={index}
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                              index === rotatingIndices[0] % artworks.filter(art => art.featured).length
+                            className={`h-2 rounded-full transition-all duration-300 ${index === rotatingIndices[0] % artworks.filter(art => art.featured).length
                                 ? `w-8 ${theme.accent.replace('text-', 'bg-')}`
                                 : 'w-2 bg-white/40'
-                            }`}
+                              }`}
                           />
                         ))}
                       </div>
@@ -243,13 +242,13 @@ const Landing = () => {
           {/* Centered Text */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <motion.h2
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className={`text-4xl md:text-7xl py-5 font-extrabold mb-16 ${theme.accent} tracking-tight text-center`}
-          >
-            KD's KREATIV
-          </motion.h2>
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className={`text-4xl md:text-7xl py-5 font-extrabold mb-16 ${theme.accent} tracking-tight text-center`}
+            >
+              KD's KREATIV
+            </motion.h2>
           </div>
           {/* 21 Artworks Grid - Based on Figma Design */}
           <div className="absolute inset-0">
@@ -258,27 +257,27 @@ const Landing = () => {
               const artworkIds = [
                 18, 48, 9, 14, 44, 20, 49, 27, 22, 13, 43, 42, 23, 24, 51, 19, 28, 25, 26, 46, 17, 40
               ];
-              
+
               const layouts = [
                 // 1
                 { width: 160, height: 200, top: 0, left: 0 },
                 // 2
-                { width: 212, height:290, top: 200, left: 0 },
+                { width: 212, height: 290, top: 200, left: 0 },
                 // 3
                 { width: 212, height: 212, top: 490, left: 0 },
-                
+
                 // 4
                 { width: 150, height: 212, top: 490, left: 212 },
                 // 5
                 { width: 150, height: 150, top: 340, left: 212 },
                 // 6
                 { width: 240, height: 340, top: 0, left: 160 },
-                
+
                 // 7 
                 { width: 162, height: 251, top: 0, left: 400 },
                 // 8
                 { width: 273, height: 451, top: 251, left: 362 },
-                
+
                 // 9 
                 { width: 138, height: 172, top: 530, left: 635 },
                 // 10
@@ -287,24 +286,24 @@ const Landing = () => {
                 { width: 248, height: 279, top: 251, left: 635 },
                 // 12 
                 { width: 321, height: 251, top: 0, left: 562 },
-                
+
                 // 13
                 { width: 280, height: 440, top: 0, left: 883 },
                 // 14 
                 { width: 188, height: 262, top: 440, left: 883 },
-                
+
                 // 15
                 { width: 152, height: 262, top: 440, left: 1071 },
                 // 16
-                { width:120, height: 189, top: 513, left: 1223 },
+                { width: 120, height: 189, top: 513, left: 1223 },
                 // 17
                 { width: 222, height: 262, top: 251, left: 1163 },
-                
+
                 // 18
                 { width: 222, height: 252, top: 0, left: 1163 },
                 // 19 
                 { width: 150, height: 202, top: 0, left: 1385 },
-                
+
                 // 20 
                 { width: 150, height: 152, top: 202, left: 1385 },
                 // 21 
@@ -312,28 +311,28 @@ const Landing = () => {
                 // 22 
                 { width: 192, height: 189, top: 513, left: 1343 }
               ];
-              
+
               return artworkIds.map((artworkId, index) => {
                 const artwork = artworks.find(art => art.id === artworkId);
                 if (!artwork) return null;
-                
+
                 const layout = layouts[index];
-                
+
                 return (
                   <motion.div
                     key={artwork.id}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ 
+                    transition={{
                       delay: index * 0.05,
                       duration: 0.6,
                       ease: "easeOut"
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.05,
                       zIndex: 50,
-                      transition: { 
+                      transition: {
                         duration: 0.5,
                         ease: [0.34, 1.56, 0.64, 1]
                       }
@@ -347,9 +346,9 @@ const Landing = () => {
                     }}
                     onClick={() => setSelectedArtwork(artwork)}
                   >
-                    <motion.div 
+                    <motion.div
                       className="relative w-full h-full overflow-hidden rounded-lg shadow-lg"
-                      whileHover={{ 
+                      whileHover={{
                         boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
                         transition: { duration: 0.4, ease: "easeOut" }
                       }}
@@ -359,16 +358,16 @@ const Landing = () => {
                         alt={artwork.title}
                         className="w-full h-full object-contain"
                         initial={{ opacity: 0 }}
-                        whileHover={{ 
+                        whileHover={{
                           opacity: 1,
-                          transition: { 
+                          transition: {
                             duration: 0.6,
                             ease: [0.4, 0, 0.2, 1]
                           }
                         }}
-                        animate={{ 
+                        animate={{
                           opacity: 0,
-                          transition: { 
+                          transition: {
                             duration: 0.5,
                             ease: [0.4, 0, 1, 1]
                           }
@@ -429,7 +428,7 @@ const Landing = () => {
                         initial={{ x: 100, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -100, opacity: 0 }}
-                        transition={{ 
+                        transition={{
                           duration: 1.2,
                           ease: "easeInOut"
                         }}
@@ -437,19 +436,19 @@ const Landing = () => {
                         decoding="async"
                       />
                     </AnimatePresence>
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"
                       whileHover={{ backgroundColor: "rgba(0,0,0,0.3)" }}
                     />
                   </div>
                   <AnimatePresence mode="wait">
-                    <motion.div 
+                    <motion.div
                       key={`text-${imageIndex}`}
                       className="p-3 md:p-4 bg-linear-to-t from-black/40 to-transparent"
                       initial={{ x: 100, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: -100, opacity: 0 }}
-                      transition={{ 
+                      transition={{
                         duration: 1.2,
                         ease: "easeInOut"
                       }}
@@ -529,20 +528,36 @@ const Landing = () => {
                 >
                   <div className={`${theme.text} space-y-4 md:space-y-6 text-center md:text-xl opacity-90 leading-relaxed`}>
                     <p>
-                      A passionate artist with a unique vision for transforming everyday moments
-                      into extraordinary visual narratives. Through a diverse range of mediums
-                      and styles, KD Kreativ brings stories to life on canvas.
+                      I transform everyday moments into expressive visual stories through detailed and thoughtful drawings.
+                      Each piece is created with close observation and emotional intent, allowing the subject to speak
+                      beyond the lines and textures on paper.
                     </p>
+
                     <p>
-                      Each artwork is a reflection of deep observation, emotional connection,
-                      and technical mastery. From intricate portraits to abstract explorations,
-                      every piece invites viewers to discover new perspectives.
+                      My work ranges from portraits to creative explorations, with a strong focus on originality and growth.
+                      This collection reflects my journey as an artist—constantly learning, experimenting, and sharing
+                      perspectives through art.
                     </p>
-                    <p>
-                      With a commitment to continuous growth and artistic evolution,
-                      Kaivalya explores various techniques and subjects, always seeking
-                      to push creative boundaries and inspire others through art.
-                    </p>
+                    
+                    {/* Instagram Link */}
+                    <div className="flex justify-center pt-4 md:pt-6">
+                      <a
+                        href="https://instagram.com/kaivalya738"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-full transition-all duration-500 hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
+                        aria-label="Follow on Instagram"
+                      >
+                        <svg
+                          className="w-6 h-6 md:w-8 md:h-8"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </motion.div>
               </div>
@@ -610,14 +625,6 @@ const Landing = () => {
                   className={`px-8 md:px-12 py-4 md:py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-base md:text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
                 >
                   Email Me
-                </a>
-                <a
-                  href="https://instagram.com/kaivalya738"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`px-8 md:px-12 py-4 md:py-6 ${theme.accent} bg-white/10 hover:bg-white/25 rounded-2xl transition-all duration-500 font-bold text-base md:text-xl hover:scale-110 transform shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20`}
-                >
-                  Follow on Instagram
                 </a>
               </div>
             </motion.div>

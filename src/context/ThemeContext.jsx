@@ -31,16 +31,6 @@ export const themes = {
     card: 'bg-[#1F2937]/80',
     hover: 'hover:bg-[#374151]/80',
     border: 'border-[#475569]'
-  },
-
-  solar: {
-    name: 'Solar',
-    bg: 'bg-gradient-to-br from-[#272121] via-[#382E2C] to-[#443632]',
-    text: 'text-[#D7CCC8]/50',
-    accent: 'text-[#A1887F]',
-    card: 'bg-[#2F2525]/80',
-    hover: 'hover:bg-[#3E3230]/80',
-    border: 'border-[#5D4037]'
   }
 };
 
