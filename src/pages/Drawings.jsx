@@ -65,10 +65,10 @@ const Drawings = () => {
         initial={{ y: 0 }}
         animate={{ y: showHeader ? 0 : -100 }}
         transition={{ duration: 0.3 }}
-        className={`${theme.card} backdrop-blur-md border-b ${theme.border} sticky top-20 z-40`}
+        className={`${theme.card} backdrop-blur-md border-b ${theme.border} sticky top-[60px] md:top-[70px] z-40`}
         style={{ WebkitBackdropFilter: 'blur(16px)' }}
       >
-        <div className="w-full max-w-[1920px] mx-auto py-3 md:py-4 flex items-center justify-start md:justify-center gap-3 md:gap-6 overflow-x-auto scrollbar-hide px-4 md:px-6">
+        <div className="w-full max-w-[1920px] mx-auto py-3 md:py-1.5 flex items-center justify-start md:justify-center gap-3 md:gap-6 overflow-x-auto scrollbar-hide px-4 md:px-6">
           {categories.map((category) => (
             <motion.button
               key={category}
