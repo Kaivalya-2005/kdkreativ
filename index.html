@@ -9,12 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Permanent+Marker&family=Caveat+Brush&display=swap" rel="stylesheet">
     <title>KD's Kreativ - Artistic Portfolio</title>
     <meta name="description" content="Explore the artistic portfolio of Kaivalya Deshpande - KD's Kreativ. A curated collection of drawings and creative expressions.">
+    <meta name="theme-color" content="#1C1E22">
     <script>
       (function () {
         const bg = localStorage.getItem("kdkreativ-theme-bg");
         if (bg) {
           document.documentElement.style.backgroundColor = bg;
           document.body.style.backgroundColor = bg;
+        } else {
+          // Default to dark theme
+          document.documentElement.style.backgroundColor = "#1C1E22";
+          document.body.style.backgroundColor = "#1C1E22";
+        }
+        
+        // Update meta theme-color for mobile browsers
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor && bg) {
+          metaThemeColor.setAttribute('content', bg);
         }
       })(); 
     </script>
