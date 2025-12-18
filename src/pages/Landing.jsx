@@ -415,7 +415,7 @@ const Landing = () => {
                           }
                         }}
                         animate={{
-                          opacity: 0,
+                          opacity: 0.2,
                           transition: {
                             duration: 0.5,
                             ease: [0.4, 0, 1, 1]
